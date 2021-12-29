@@ -1,0 +1,4 @@
+plugin: linode.cloud.instance
+
+types:
+- g1-gpu-rtx6000-1

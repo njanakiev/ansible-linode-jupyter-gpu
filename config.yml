@@ -1,0 +1,7 @@
+---
+ssh_keys: ~/.ssh/linode.pub
+
+server_name: gpu_server
+server_type: g1-gpu-rtx6000-1
+server_image: linode/ubuntu20.04
+server_region: us-east

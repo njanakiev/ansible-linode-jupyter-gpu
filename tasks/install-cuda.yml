@@ -1,0 +1,44 @@
+---
+- name: Install packages.
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: true
+    cache_valid_time: 3600
+  loop:
+  - build-essential
+  - gcc
+
+- name: Download CUDA driver.
+  get_url: 
+    url: https://developer.download.nvidia.com/compute/cuda/11.5.1/local_installers/cuda-repo-ubuntu2004-11-5-local_11.5.1-495.29.05-1_amd64.deb
+    dest: /root/cuda-repo-ubuntu2004-11-5-local_11.5.1-495.29.05-1_amd64.deb
+  
+- name: Install CUDA driver.
+  apt:
+    deb: /root/cuda-repo-ubuntu2004-11-5-local_11.5.1-495.29.05-1_amd64.deb
+
+- name: Downlad machine learning repo.
+  get_url:
+    url: http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.deb
+    dest: /root/nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.deb
+
+- name: Install machine learning repo.
+  apt:
+    deb: /root/nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.deb
+
+- name: Add CUDA key.
+  apt_key:
+    file: /var/cuda-repo-ubuntu2004-11-5-local/7fa2af80.pub
+    state: present
+
+- name: Install CUDA.
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+    install_recommends: false
+  loop:
+  - cuda
+  - nvidia-cuda-toolkit

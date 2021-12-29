@@ -1,0 +1,16 @@
+---
+- name: Destroy Linode GPU server.
+  hosts: localhost
+  gather_facts: false
+  vars:
+    linode_token: "{{ lookup('env', 'LINODE_ACCESS_TOKEN') }}"
+  
+  vars_files:
+  - config.yml
+
+  pre_tasks:
+  - name: Destroy Linode GPU server.
+    linode.cloud.instance:
+      label: "{{ server_name }}"
+      api_token: "{{ linode_token }}"
+      state: absent

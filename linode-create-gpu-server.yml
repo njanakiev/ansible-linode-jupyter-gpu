@@ -1,0 +1,67 @@
+---
+- name: Create Linode GPU server.
+  hosts: localhost
+  gather_facts: false
+  vars:
+    linode_token: "{{ lookup('env', 'LINODE_ACCESS_TOKEN') }}"
+  
+  vars_files:
+  - config.yml
+
+  pre_tasks:
+  - name: Create Linode GPU server.
+    linode.cloud.instance:
+      label: "{{ server_name }}"
+      api_token: "{{ linode_token }}"
+      type: "{{ server_type }}"
+      region: "{{ server_region }}"
+      image: "{{ server_image }}"
+      root_pass: "{{ root_password }}"
+      authorized_keys: "{{ ssh_keys }}"
+      state: present
+    register: server
+
+  - name: Refresh inventory after adding server.
+    meta: refresh_inventory
+
+  - name: Remove host keys of servers.
+    known_hosts:
+      name: "{{ server.instance.ipv4 }}"
+      path: /home/nikolai/.ssh/known_hosts
+      state: absent
+
+  - name: Wait until server is ready.
+    wait_for:
+      host: "{{ server.instance.ipv4[0] }}"
+      port: 22
+      search_regex: OpenSSH
+      delay: 2
+      timeout: 300
+
+
+- name: Setup server.
+  hosts: all
+  user: root
+  gather_facts: false
+  vars_files:
+  - config.yml
+
+  tasks:
+  - import_tasks: tasks/install-cuda.yml
+
+  - name: Add Python repository.
+    apt_repository:
+      repo: 'ppa:deadsnakes/ppa'
+
+  - name: Install Python.
+    apt:
+      name: "{{ item }}"
+      state: present
+      update_cache: true
+    loop:
+    - python3.9
+    - python3.9-dev
+    - python-is-python3
+
+  - name: Reboot server.
+    reboot:

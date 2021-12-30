@@ -1,0 +1,46 @@
+---
+- name: "Ensures /home/{{ username }}/notebooks."
+  file:
+    path: "/home/{{ username }}/notebooks"
+    state: directory
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: 0775
+
+- name: "Copy example notebook."
+  copy:
+    src: "jupyter/example.ipynb"
+    dest: "/home/{{ username }}/notebooks/example.ipynb"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: 0775
+
+- name: "Ensures /home/{{ username }}/.jupyter directory exists."
+  file:
+    path: "/home/{{ username }}/.jupyter"
+    state: directory
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: 0700
+
+- name: "Copy jupyter_notebook_config.py."
+  template:
+    src: "jupyter/jupyter_notebook_config.py.j2"
+    dest: "/home/{{ username }}/.jupyter/jupyter_notebook_config.py"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: 0664
+
+- name: "Copy jupyter.service."
+  template:
+    src: "jupyter/jupyter.service.j2"
+    dest: "/etc/systemd/system/jupyter.service"
+    owner: root
+    group: root
+    mode: 0664
+
+- name: Start jupyter service.
+  systemd:
+    name: jupyter.service
+    state: started
+    daemon_reload: true

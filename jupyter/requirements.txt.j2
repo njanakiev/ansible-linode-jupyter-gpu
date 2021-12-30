@@ -1,0 +1,19 @@
+{% if is_gpu %}
+torch==1.10.1+cu113
+torchvision==0.11.2+cu113
+torchaudio==0.10.1+cu113
+-f https://download.pytorch.org/whl/cu113/torch_stable.html
+{% else %}
+torch==1.10.1+cpu
+torchvision==0.11.2+cpu
+torchaudio==0.10.1+cpu
+-f https://download.pytorch.org/whl/cpu/torch_stable.html
+{% endif %}
+numpy
+pandas
+matplotlib
+tqdm
+opencv-python
+Pillow
+jupyterlab==3.2.5
+ipywidgets==7.6.5

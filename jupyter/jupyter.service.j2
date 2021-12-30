@@ -1,0 +1,14 @@
+[Unit]
+Description=Jupyter Notebook
+
+[Service]
+Type=simple
+PIDFile=/run/jupyter.pid
+ExecStart=/usr/bin/python -m jupyterlab
+User={{ username }}
+Group={{ username }}
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

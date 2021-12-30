@@ -1,6 +1,6 @@
 # ansible-linode-gpu-jupyter-setup
 
-Automatic provisioning and setup for [Linode](https://www.linode.com/?r=e54e6c8185f5399de2527f9f3bc7cde39bbcc624) GPU cloud instances with Ansible. The setup includes installation of the following packages and libraries:
+Automatic provisioning and setup for [Linode](https://linode.gvw92c.net/LPg90o) GPU cloud instances with Ansible. The setup includes installation of the following packages and libraries:
 
 - [CUDA Toolkit 11.5](https://developer.nvidia.com/cuda-downloads?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=20.04&target_type=deb_local) for Ubuntu 20.04
 - [Python 3.9](https://www.python.org/)
@@ -11,7 +11,7 @@ Note, the installation also runs on CPU-only Linodes, but without CUDA and GPU s
 
 # Installation
 
-This project uses the [linode.cloud](https://github.com/linode/ansible_linode) collection. You need a [Linode](https://www.linode.com/?r=e54e6c8185f5399de2527f9f3bc7cde39bbcc624) account with enabled API Token and [Ansible](https://www.ansible.com/) installed to run the following scripts. These scripts were tested with `Ansible 2.11.7` running on `Python 3.7.11`.
+This project uses the [linode.cloud](https://github.com/linode/ansible_linode) collection. You need a [Linode](https://linode.gvw92c.net/LPg90o) account with enabled API Token and [Ansible](https://www.ansible.com/) installed to run the following scripts. These scripts were tested with `Ansible 2.11.7` running on `Python 3.7.11`.
 
 Install the required dependencies to run the scripts with:
 

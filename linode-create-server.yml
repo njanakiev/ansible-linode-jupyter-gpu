@@ -30,7 +30,7 @@
   - name: Remove host keys of servers.
     known_hosts:
       name: "{{ server.instance.ipv4 }}"
-      path: /home/nikolai/.ssh/known_hosts
+      path: ~/.ssh/known_hosts
       state: absent
 
   - name: Wait until server is ready.

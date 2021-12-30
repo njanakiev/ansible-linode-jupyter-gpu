@@ -1,4 +1,4 @@
 plugin: linode.cloud.instance
 
 tags:
-- project=linode-create-gpu-server
+- project=linode-jupyter-setup

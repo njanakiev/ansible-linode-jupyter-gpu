@@ -1,5 +1,5 @@
 ---
-- name: Destroy Linode GPU server.
+- name: Destroy Linode server.
   hosts: localhost
   gather_facts: false
   vars:
@@ -9,7 +9,7 @@
   - config.yml
 
   pre_tasks:
-  - name: Destroy Linode GPU server.
+  - name: Destroy Linode server.
     linode.cloud.instance:
       label: "{{ server_name }}"
       api_token: "{{ linode_token }}"

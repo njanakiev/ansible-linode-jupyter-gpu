@@ -1,5 +1,5 @@
 ---
-- name: Create Linode GPU server.
+- name: Create Linode server.
   hosts: localhost
   gather_facts: false
   vars:
@@ -10,7 +10,7 @@
   - config.yml
 
   pre_tasks:
-  - name: Create Linode GPU server.
+  - name: Create Linode server.
     linode.cloud.instance:
       label: "{{ server_name }}"
       api_token: "{{ linode_token }}"
@@ -20,7 +20,7 @@
       root_pass: "{{ root_password }}"
       authorized_keys: "{{ ssh_keys }}"
       tags:
-      - project=linode-create-gpu-server
+      - project=linode-jupyter-setup
       state: present
     register: server
 

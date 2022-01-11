@@ -39,7 +39,7 @@
       port: 22
       search_regex: OpenSSH
       delay: 2
-      timeout: 300
+      timeout: 600
 
 
 - name: Setup server.
@@ -96,7 +96,20 @@
     pip:
       requirements: /root/requirements.txt
 
+  - name: Synchronize notebooks folder.
+    synchronize:
+      src: notebooks
+      dest: "/home/{{ username }}/"
+
   - import_tasks: tasks/install-jupyter-service.yml
+
+  - name: Copy .tmux.conf.
+    copy:
+      src: .tmux.conf
+      dest: "/home/{{ username }}/.tmux.conf"
+      owner: "{{ username }}"
+      group: "{{ username }}"
+      mode: 0664
 
   - name: Install packages.
     apt:
@@ -108,6 +121,14 @@
     loop:
     - tree
     - htop
+    - tmux
+    - imagemagick
+
+  - name: Setup firewall.
+    ufw:
+      rule: allow
+      state: enabled
+      name: OpenSSH
 
   - name: Reboot server.
     reboot:

@@ -1,20 +1,4 @@
 ---
-- name: "Ensures /home/{{ username }}/notebooks."
-  file:
-    path: "/home/{{ username }}/notebooks"
-    state: directory
-    owner: "{{ username }}"
-    group: "{{ username }}"
-    mode: 0775
-
-- name: "Copy example notebook."
-  copy:
-    src: "jupyter/example.ipynb"
-    dest: "/home/{{ username }}/notebooks/example.ipynb"
-    owner: "{{ username }}"
-    group: "{{ username }}"
-    mode: 0775
-
 - name: "Ensures /home/{{ username }}/.jupyter directory exists."
   file:
     path: "/home/{{ username }}/.jupyter"
@@ -30,6 +14,9 @@
     owner: "{{ username }}"
     group: "{{ username }}"
     mode: 0664
+
+- name: Enable widgetsnbextension.
+  command: jupyter nbextension enable --py widgetsnbextension
 
 - name: "Copy jupyter.service."
   template:

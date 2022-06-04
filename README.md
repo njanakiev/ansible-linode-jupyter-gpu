@@ -1,4 +1,4 @@
-# ansible-linode-gpu-jupyter-setup
+# ansible-linode-jupyter-gpu
 
 Automatic provisioning and setup for [Linode](https://linode.gvw92c.net/LPg90o) GPU cloud instances with Ansible. The setup includes installation of the following packages and libraries:
 
